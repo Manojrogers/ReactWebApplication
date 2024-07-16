@@ -7,6 +7,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
         {/*<App.App1 />*/}
         <App.App2 />
-        <App.App />
+        {/*<App.App />*/}
+        <App.MyComponent />
   </React.StrictMode>,
 )

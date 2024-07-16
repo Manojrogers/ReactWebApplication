@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import { Button } from '@progress/kendo-react-buttons';
+//import { Button } from '@progress/kendo-react-buttons';
 import { ComboBox } from '@progress/kendo-react-dropdowns';
 import '@progress/kendo-theme-default/dist/all.css';
 
@@ -93,19 +93,59 @@ function App2() {
     }
 }
 
+//const handleClick = () => {
+//    console.log('Button clicked!');
+//    fetch('https://jsonplaceholder.org/posts?id=1', {
+//        method: "GET",
+//        mode: 'cors',
+//        headers: {
+//            'Access-Control-Allow-Origin': '*',
+//            'Content-Type': 'application/json',
+//        }
+//    }).then(response => response)
+//        .then(json => console.log(json))
+//        .catch(e => console.log(e));
+//};
+//function App() {
+//    return (
+//        <div className="App">
+//            <Button onClick={handleClick} >Click me</Button>
+//            <ComboBox
+//                data={['Option 1', 'Option 2', 'Option 3']} // Replace with your data
+//                placeholder="Select an option"
+//            />
+//        </div>
 
-function App() {
+//    );
+//}
+const MyComponent = () => {
+    const [comboBoxData, setComboBoxData] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('https://localhost:44397/api/v1/master/getGeneralCode?reference=USERSTATUS&mode=P');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setComboBoxData(data); // Update state with fetched data
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData(); // Call the async function
+    }, []); // Empty dependency array means this effect runs only once, on component mount
+
     return (
-        <div className="App">
-            <Button>Click me</Button>
-            <ComboBox
-                data={['Option 1', 'Option 2', 'Option 3']} // Replace with your data
-                placeholder="Select an option"
-            />
-        </div>
-
+        <ComboBox
+            data={comboBoxData}
+            textField="name" // Replace 'name' with the field name from your API response
+            valueField="id" // Replace 'id' with the field name from your API response
+        />
     );
-}
+};
 
 
-export default { App, App2 };
+export default { App2, MyComponent };
